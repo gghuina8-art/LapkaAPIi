@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.rocket_autoskin">
+
+    <!-- Разрешения -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+    <application
+        android:label="LAPKAAPI"
+        android:theme="@android:style/Theme.Material.Light">
+
+        <!-- ЭКРАН ВХОДА (Главный экран при запуске) -->
+        <activity android:name=".LoginActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <!-- ГЛАВНОЕ МЕНЮ (Доступно только после ввода пароля) -->
+        <activity android:name=".MainActivity" android:exported="false" />
+
+        <!-- Экран калибровки -->
+        <activity android:name=".CalibrationActivity" />
+
+        <!-- Экран настроек (Секретный) -->
+        <activity android:name=".SettingsActivity" />
+
+        <!-- Сервис кликов (Специальные возможности) -->
+        <service android:name=".ClickerService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService"/>
+            </intent-filter>
+            <meta-data android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_config"/>
+        </service>
+
+        <!-- Сервис захвата экрана и автопокупки -->
+        <service android:name=".AutoBuyService"
+            android:foregroundServiceType="mediaProjection"
+            android:exported="false"/>
+
+    </application>
+</manifest>
